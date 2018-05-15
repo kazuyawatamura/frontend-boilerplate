@@ -1,0 +1,490 @@
+@charset "UTF-8";
+
+main {
+  position: relative;
+}
+.section-primary {
+  position: relative;
+  z-index: z(section-primary);
+}
+// =======================================
+// 第2階層
+// =======================================
+.breadcrumbs {
+  + .section-primary {
+    padding-top: 40px;
+    @include mq() {
+      padding-top: 80px;
+    }
+  }
+}
+
+
+
+// =========================================
+// 白　上下くねくね
+// =========================================
+.bgType1 {
+  position: relative;
+  padding: 32px 6% 8px;
+  margin-bottom: 40px;
+  background-color: #fff;
+	box-shadow: 1px 1px 4px 0 rgba(0,0,0,0.4);
+
+  @include mq() {
+    width: $pc-width-s;
+    padding: 32px 48px;
+    margin: 0 auto 40px;
+  }
+
+  &::before, &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+  &::before {
+    top: -7px;
+    height: 7px;
+    background: resolve("bg-type1-top.png") 0 0 repeat-x;
+  }
+  &::after {
+    bottom: -7px;
+    height: 10px;
+    background: resolve("bg-type1-bottom.png") 0 0 repeat-x;
+  }
+}
+// =========================================
+// 緑　上下くねくね
+// =========================================
+.bgType2 {
+  position: relative;
+  padding: 32px 6% 8px;
+  margin-bottom: 40px;
+  background-color: $color-F;
+
+  @include mq() {
+    padding: 32px 48px;
+    margin: 0 auto 40px;
+  }
+
+  &::before, &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+  &::before {
+    top: -5px;
+    height: 5px;
+    background: resolve("bg-type2-top.png") 0 0 repeat-x;
+  }
+  &::after {
+    bottom: -5px;
+    height: 5px;
+    background: resolve("bg-type2-bottom.png") 0 0 repeat-x;
+  }
+}
+// =========================================
+// 白ノート
+// =========================================
+.bgType3 {
+  position: relative;
+  text-align: center;
+  padding: 48px 9% 24px 4%;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, .2);
+  background: #FFF resolve("parts-note-hole-green.gif") right 0px top 22px repeat-y;
+  background-size:
+    width("parts-note-hole-green.gif")
+    height("parts-note-hole-green.gif");
+
+  > .inner {
+    height: 100%;
+    background: resolve("parts-none-line.gif") 0 0 repeat;
+  }
+
+  &.hole-white {
+    background-image: resolve("parts-note-hole-white.gif");
+  }
+}
+
+
+
+// =========================================
+// パンくず
+// =========================================
+.contents-wrapper {
+  display: block;
+  position: relative;
+  @include mq() {
+    @at-root .header:not(.top) + .contents-wrapper {
+      padding-top: $headHight;
+    }
+  }
+}
+.breadcrumbs {
+  font-size: fz(14);
+  padding: 3px 3%;
+  background-color: $color-grayB;
+  @include mq() {
+    position: absolute;
+    left: 50%;
+    z-index: z(breadcrumbs);
+    transform: translateX(-50%);
+    width: $pc-width;
+    padding: 8px 0;
+    margin: 0 auto;
+    background-color: transparent;
+  }
+
+  @include mq() {
+    &.white {
+      color: #FFFFFF;
+      li {
+        &:after {
+          border-top-color: #FFFFFF;
+          border-right-color: #FFFFFF;
+        }
+      }
+      a {
+        color: #FFFFFF;
+      }
+    }
+  }
+
+  &__lists {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__item {
+    a {
+    }
+
+    &:not(:last-child) {
+      position: relative;
+      padding-right: 16px;
+      margin-right: 12px;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        width: 6px;
+        height: 6px;
+        margin-top: -4px;
+        border-top: 1px solid #111;
+        border-right: 1px solid #111;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+// =======================================
+// コンテンツ下のコンバージョンエリア
+// =======================================
+.call-to-act {
+  position: relative;
+  text-align: center;
+  padding: 40px 24px;
+  padding-right: 40px;
+  margin: 96px 3% 72px;
+  background-color: $color-grayC;
+  @include mq() {
+    width: 658px;
+    padding: 72px 80px 40px 63px;
+    margin: 168px auto 72px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    display: block;
+    width: width("parts-flower-badge2.png");
+    height: height("parts-flower-badge2.png");
+    background: resolve("parts-flower-badge2.png") 0 0 no-repeat;
+    background-size:
+      width("parts-flower-badge2.png",2)
+      height("parts-flower-badge2.png",2);
+    @include mq() {
+      top: -63px;
+      left: -24px;
+      background-size:
+        width("parts-flower-badge2.png")
+        height("parts-flower-badge2.png");
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 21px;
+    height: 100%;
+    background: resolve("parts-note-hole-white.gif") top 24px right 0px repeat-y;
+  }
+  .inner {
+    &::before {
+      content: "";
+      position: absolute;
+      top: -68px;
+      right: -8px;
+      z-index: z(parts-fukidashi);
+      display: block;
+      width: width("parts-fukidashi.png",1.5);
+      height: height("parts-fukidashi.png",1.5);
+      background: resolve("parts-fukidashi.png") 0 0 no-repeat;
+      background-size:
+        width("parts-fukidashi.png",1.5)
+        height("parts-fukidashi.png",1.5);
+
+      @include mq() {
+        top: -32px;
+        right: -15px;
+        width: width("parts-fukidashi.png");
+        height: height("parts-fukidashi.png");
+        background-size:
+          width("parts-fukidashi.png")
+          height("parts-fukidashi.png");
+      }
+    }
+  }
+
+  &__title {
+    font-size: 5vw;
+    @include font-jp();
+    @include fontBeauty;
+    margin-bottom: 8px;
+
+    @include mq() {
+      font-size: fz(28);
+      margin-bottom: 16px;
+    }
+  }
+
+  .ctaConsul {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    line-height: 1;
+    color: #FFFFFF;
+    font-size: 3.6vw;
+    @include font-jp(r);
+    padding: 23px 8px;
+    margin-bottom: 16px;
+    border-radius: $primary-border-radius;
+    border: 1px solid $color-grayD;
+    box-shadow: 3px 3px 0px 0 rgba(0,0,0,0.2);
+    background-color: $color-C;
+    @include transition;
+
+    @include mq() {
+      letter-spacing: 1px;
+      font-size: fz(16);
+      padding: 23px 0;
+      margin: 0 auto 24px;
+      box-shadow: 5px 4px 0px 0 rgba(0,0,0,0.2);
+      transform: translateY(0px);
+    }
+
+    &:hover {
+      @extend %local-hoverStyle;
+      @include hoverLighten($color-C);
+    }
+  }
+  .cta-application {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    line-height: 1;
+    color: #FFFFFF;
+    font-size: 3.6vw;
+    @include font-jp(r);
+    padding: 23px 0;
+    margin-bottom: 24px;
+    border-radius: $primary-border-radius;
+    border: 1px solid $color-grayD;
+    box-shadow: 3px 3px 0px 0 rgba(0,0,0,0.2);
+    background-color: $color-D;
+    @include transition;
+
+    @include mq() {
+      letter-spacing: 1px;
+      font-size: fz(16);
+      margin: 0 auto 24px;
+      box-shadow: 5px 4px 0px 0 rgba(0,0,0,0.2);
+      transform: translateY(0px);
+    }
+
+    &:hover {
+      @extend %local-hoverStyle;
+      @include hoverLighten($color-D);
+    }
+  }
+
+  &__phone-num {
+    width: 85%;
+    margin: 32px auto 30px;
+    @include mq() {
+      width: width("call-to-act-tellnum.png",2);
+    }
+  }
+  &__textLink {
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+    a {
+      font-size: 4vw;
+      @include arrow-small($text-base, -4);
+      @include mq() {
+        font-size: fz(16);
+      }
+    }
+  }
+}
+
+
+// =======================================
+// ペン
+// =======================================
+.parts-pen {
+  display: none;
+  @include mq() {
+    display: block;
+    position: absolute;
+    // z-index: z(parts-pen);
+    z-index: -1;
+    width: width("parts-pen-twister.png");
+    height: height("parts-pen-twister.png");
+    background: resolve("parts-pen-twister.png") 0 0 no-repeat;
+    background-size:
+      width("parts-pen-twister.png")
+      height("parts-pen-twister.png");
+    }
+  &.top {
+    top: 395px;
+    right: 0%;
+  }
+  &.middle {
+    top: 1395px;
+    right: 0%;
+    transform: rotate(180deg);
+  }
+  &.bottom {
+    top: 2650px;
+    left: 0%;
+    transform: rotate(40deg);
+  }
+}
+
+
+.works-credit {
+  text-align: left;
+  @include mq() {
+    width: $pc-width-ss;
+    margin: 0 auto;
+  }
+
+  dt {
+    font-size: fz(18);
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  dd {
+    + dd {
+      margin-top: 16px;
+    }
+    + dt {
+      margin-top: 32px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+    a {
+      @include window;
+    }
+  }
+
+  .record {
+    li {
+      font-size: fz(14);
+      margin-bottom: 16px;
+      @include mq() {
+        position: relative;
+        margin-bottom: 8px;
+      }
+    }
+    em {
+      font-weight: bold;
+    }
+    .title {
+      display: block;
+      @include mq() {
+        display: inline-block;
+        width: 210px;
+        margin: 0 24px;
+      }
+    }
+    .body {
+      display: block;
+      @include mq() {
+        position: absolute;
+        top: 0;
+        left: 124px;
+      }
+    }
+  }
+
+  .columns {
+    @include mq() {
+      display: flex;
+    }
+    ul {
+      @include mq() {
+        width: 50%;
+      }
+      &.single {
+        @include mq() {
+          width: 100%;
+        }
+      }
+    }
+    li {
+      font-size: fz(14);
+      text-indent: -1rem;
+      padding-left: 1rem;
+      &::before {
+        content: "_ "
+      }
+    }
+  }
+}
+
+.notfound {
+  text-align: center;
+  margin: 0 6% 30vh;
+  @include mq() {
+    width: $pc-width-ss;
+    margin: 0 auto 50vh;
+  }
+  p {
+    margin-bottom: 16px;
+
+    &:nth-child(2) {
+      margin-bottom: 32px;
+    }
+  }
+
+  a {
+    display: inline-block;
+    @include arrow-small($color: #000);
+  }
+}

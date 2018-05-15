@@ -1,0 +1,552 @@
+@charset "UTF-8";
+
+// Top
+// =========================================
+//  info-cshool
+// =========================================
+.info-cshool {
+  @include mq() {
+    padding-top: 63px;
+  }
+  &__post {
+    padding: 16px;
+    margin: 0 3% 80px;
+    box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.4);
+    background-color: #FFF;
+
+    @include mq() {
+      width: $pc-width;
+      padding: 32px 24px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+
+  &__list {
+    &--primary {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .post-item {
+        width: 46%;
+        margin-bottom: 48px;
+
+        @include mq() {
+          width: 234px;
+        }
+
+        a {
+          position: relative;
+          display: block;
+
+          &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: z(top-post-item);
+            width: 100%;
+            padding-top: percentage(195/314);
+            background: resolve("parts-pic-bg-pattern.gif") 0 0 repeat;
+          }
+
+          .post-thumbnail {
+            position: relative;
+            z-index: z(top-post-thumbnail);
+            display: block;
+            border-radius: 2px;
+            margin-bottom: 16px;
+            background-position: center center;
+            background-size: cover;
+            padding-top: percentage(195/314);
+
+            @include mq() {
+              @include transition;
+              transform: translate3d(-4px, -4px, 0) perspective(0);
+            }
+          }
+          &:hover {
+            .post-thumbnail {
+              @include mq() {
+                backface-visibility: hidden;
+                transform: translate3d(0, 0, 0) perspective(0);
+              }
+            }
+          }
+        }
+
+        time {
+          display: block;
+          font-size: fz(14);
+          font-family: 'Montserrat', sans-serif;
+
+          @include mq() {
+            font-style: italic;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+          }
+        }
+        .post-title {
+          font-size: fz(16);
+          line-height: $primary-line-height;
+          margin-bottom: 24px;
+        }
+      }
+    }
+    // .info-cshool__list--primary
+
+    &--secondary {
+      margin-bottom: 24px;
+
+      .post-item {
+        padding: 16px 0;
+        border-top: 1px solid #E4EFF0;
+
+        a {
+          display: flex;
+          line-height: 1;
+
+          time {
+            font-size: fz(15);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.5;
+            width: 80px;
+
+          }
+          .post-category {
+            margin: 0 32px;
+          }
+          .post-title {
+            line-height: 1.3;
+          }
+        }
+      }
+    }
+  }
+
+  .post-category {
+    span {
+      display: inline-block;
+      font-size: fz(14);
+      color: #FFF;
+      line-height: 1;
+      border-radius: 4px;
+      padding: 6px 10px;
+      @include mq() {
+        text-align: center;
+        letter-spacing: 1px;
+        font-size: fz(12);
+        width: 80px;
+        padding: 4px 0;
+      }
+    }
+    // お知らせ
+    .info {
+      background-color: $color-B;
+    }
+    // 書籍
+    .event, .book {
+      background-color: $color-C;
+    }
+    // 講座
+    .course {
+      background-color: $color-D;
+    }
+  }
+}
+//.info-cshool
+
+
+// =========================================
+//  Weekend Course
+// =========================================
+.weekend-course {
+  padding: 40px 0 (40+16#{px});
+  background-color: $color-F;
+  background-image:
+    resolve("parts-pen-horizontal2.png"),
+    resolve("parts-pen-horizontal2.png");
+  background-position:
+    left 0px top -3px,
+    left 0px bottom -12px;
+  background-repeat:
+    repeat-x,
+    repeat-x;
+  box-shadow: 0 8px 0 0 rgba(0, 0, 0, .2);
+
+  @include mq() {
+    background-image:
+      resolve("parts-pen-horizontal1.png"),
+      resolve("parts-pen-horizontal2.png");
+    background-position:
+      center top -3px,
+      left 0px bottom -12px;
+  }
+
+
+    //黒板消し
+    @include kokubankeshi();
+
+    &__inner {
+      @include erasure-mark();
+      padding: 48px 6% 0;
+      background-position:
+        left -140px top 0px,
+        right -105px top -21px,
+        left 0px bottom -21px;
+
+      @include mq() {
+        width: $pc-width;
+        padding: 48px 0 0 0;
+        margin: 0 auto;
+        background-position:
+          left 0px top -100px,
+          right 0px top -70px,
+          left 0px bottom -21px;
+      }
+    }
+
+  .header-title {
+    &--primary {
+      color: #FFF;
+    }
+  }
+
+  &__discription {
+    text-align: center;
+    color: #FFF;
+    font-size: fz(14);
+    margin-bottom: 40px;
+
+    @include mq() {
+      font-size: fz(16);
+    }
+  }
+
+  // 講座の一覧
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 40px;
+  }
+
+  &__item {
+    font-size: fz(14);
+    width: 48.5%;
+    padding: 24px 6% 24px 3%;
+    margin-bottom: 6px;
+
+    @include mq() {
+      width: 356px;
+      padding: 24px 32px 24px 22px;
+      background-position: right top 24px;
+      background-size: 21px 165px;
+
+      // &:nth-child(-n+3) {
+      //   width: 356px;
+      // }
+    }
+
+    a {
+      text-decoration: none;
+    }
+    &-taxonomy {
+      position: relative;
+      margin-bottom: 18px;
+      span {
+        display: block;
+        color: #FFF;
+        line-height: 1;
+        max-width: 90px;
+        padding: 6px;
+        margin: 0 auto;
+        border-radius: $primary-border-radius/2;
+
+        @include mq() {
+          display: inline-block;
+          width: 90px;
+
+          &:nth-child(2) {
+            margin-left: 8px;
+          }
+        }
+
+        &.beginner {
+          background-color: $color-B;
+        }
+        &.open {
+          background-color: $color-H;
+        }
+        &.middle {
+          background-color: $color-D;
+        }
+        &.wanted {
+          position: absolute;
+          top: -38px;
+          left: 50%;
+          width: 100%;
+          background-color: $color-G;
+          transform: translateX(-50%);
+
+          @include mq() {
+            position: static;
+            top: auto;;
+            left: auto;
+            width: 90px;
+            transform: none;
+          }
+        }
+      }
+    }
+    &-title {
+      @include font-jp(h);
+      // font-size: fz(16);
+      font-size: 5vw;
+      line-height: 1.3;
+      margin-bottom: 16px;
+
+      @include mq() {
+        font-size: fz(22);
+      }
+
+      .small-text {
+        font-size: 4vw;
+
+        @include mq() {
+          font-size: fz(19);
+        }
+      }
+    }
+    &-description {
+      font-size: fz(12);
+      text-align: left;
+      margin-bottom: 10px;
+
+      @include mq() {
+        font-size: fz(14);
+      }
+    }
+    &-link {
+      span {
+        @include arrow-small($text-base, -2);
+      }
+    }
+
+    &:hover {
+      @at-root .weekend-course__item a:hover .weekend-course__item-link {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+
+// =========================================
+//  Weekend Course
+// =========================================
+.service-training {
+  margin: 0 3%;
+
+  @include mq() {
+    margin: 0;
+  }
+
+  > .header-title--primary {
+    margin-top: 63px;
+  }
+
+  &__header {
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: center;
+    color: #FFF;
+    padding: 16px;
+    margin-bottom: 24px;
+    background: $color-E resolve("parts-ruler.gif") left bottom repeat-x;
+
+    @include mq() {
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: -40px;
+      right: -24px;
+      width: 151px;
+      height: 122px;
+      background: resolve("parts-flower-badge3.png") right top no-repeat;
+      // background-size: (151/1.5#{px}) (122/1.5#{px});
+      background-size: width("parts-flower-badge3.png", 1.5) height("parts-flower-badge3.png", 1.5);
+
+      @include mq() {
+        top: -45px;
+        background-size: width("parts-flower-badge3.png") height("parts-flower-badge3.png");
+      }
+    }
+
+    &-title {
+      font-size: fz(20);
+      @include font-jp();
+      margin: 8px 0;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+
+      @include mq() {
+        @include font-jp(r);
+        font-size: fz(32);
+        text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+      }
+    }
+    &-description {
+      font-size: fz(14);
+      margin-bottom: 8px;
+
+      @include mq() {
+        font-size: fz(16);
+      }
+    }
+  }
+
+  &__catchcopy {
+    font-weight: bold;
+    margin-bottom: 16px;
+
+    @include mq() {
+      text-align: center;
+      font-size: fz(18);
+      margin-bottom: 32px;
+    }
+  }
+
+  &__table-contents {
+    margin-bottom: 40px;
+
+    @include mq() {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    > img {
+      display: block;
+      width: 70%;
+      margin: 0 auto 24px;
+
+      @include mq() {
+        width: auto;
+        margin: 0;
+      }
+    }
+
+    .table-contents {
+
+      @include mq() {
+        width: 380px;
+        margin-top: 56px;
+      }
+
+      &__title {
+        font-weight: bold;
+        padding: 0 12px 8px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid $color-grayC;
+      }
+      &__lists {
+        padding: 0 12px;
+
+        li {
+          counter-increment: num;
+          font-size: fz(14);
+          margin-bottom: 8px;
+
+          @include mq() {
+            margin-bottom: 12px;
+          }
+
+          &::before {
+            content: counter(num);
+            display: inline-block;
+            text-align: center;
+            line-height: 1;
+            color: #FFF;
+            font-size: fz(14);
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            margin-right: 12px;
+            border-radius: 24px;
+            background-color: $color-B;
+          }
+        }
+      }
+    }
+  }
+  .company-training {
+    &__casestudy {
+      margin-bottom: 48px;
+
+      @include mq() {
+        position: relative;
+      }
+
+      .casestudyTitle {
+        width: 70%;
+        margin: 0 10% 0 auto;
+        margin-bottom: 24px;
+
+        @include mq() {
+          width: 262px;
+          margin: 0 0 0 32px;
+        }
+      }
+      .casestudy-list {
+
+        li {
+          margin: 0 auto 24px;
+
+          @include mq() {
+            position: absolute;
+          }
+
+          &.cyberagent {
+            width: 70%;
+            @include mq() {
+              top: 30px;
+              left: 324px;
+              width: 214px;
+            }
+          }
+          &.dena {
+            width: 30%;
+            @include mq() {
+              top: 40px;
+              right: 30px;
+              width: 90px;
+            }
+          }
+          &.bizreach {
+            width: 65%;
+            @include mq() {
+              top: 101px;
+              left: 332px;
+              width: 182px;
+            }
+          }
+          &.dmm {
+            width: 65%;
+            @include mq() {
+              top: 118px;
+              right: 18px;
+              width: 162px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

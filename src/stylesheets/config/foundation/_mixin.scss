@@ -1,0 +1,406 @@
+@charset "UTF-8";
+
+// =========================================
+// Japanese wWeb Font
+// =========================================
+@mixin font-jp($local-bold: null) {
+  @if $local-bold == r {
+    $local-bold: 400
+  } @else if $local-bold == h {
+    $local-bold: 900
+  } @else {
+    $local-bold: 700 // <- Default value
+  }
+
+  font-family: "tbudrgothic-std",sans-serif;
+  font-weight: $local-bold;
+}
+
+// .example {
+//   @include font-jp(h);
+// }
+
+// =========================================
+// Font size for px to rem
+// =========================================
+@function fz($local-pixels, $local-context: strip-unit($text-base-size)) {
+  @return $local-pixels / $local-context * 1rem;
+}
+
+// .example {
+//   font-size: fz(12); <- 12px quite
+// }
+
+
+// =========================================
+// Small TextFont
+// =========================================
+@mixin small-text($local-fontsize) {
+  .small-text {
+    font-size: ($local-fontsize * 0.85#{px});
+    padding: 0 1px;
+  }
+}
+
+// =========================================
+// Small TextFont
+// =========================================
+@mixin fontBeauty {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-feature-settings: "palt" 1;
+  font-feature-settings: "palt" 1;
+  text-rendering: optimizeLegibility;
+}
+
+// =========================================
+// Arrow
+// =========================================
+
+@mixin arrow-small($color: rgba(#FFFFFF, .4), $mt:-5, $deg:45deg) {
+  position: relative;
+  padding-left: 18px;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    width: 5px;
+    height: 5px;
+    margin-top: $mt#{px};
+    border-top: 2px solid $color;
+    border-right: 2px solid $color;
+    transform: rotate($deg);
+  }
+}
+
+// =========================================
+//Mediaquerys
+// =========================================
+$breakpoints: (
+  'maxmd': 'screen and (max-width: 767px)', // <- When SmartPhone view
+  'sm': 'screen and (min-width: 400px)',
+  'md': 'screen and (min-width: 768px)', // <- Default value
+  'lg': 'screen and (min-width: 1080px)',
+  'xl': 'screen and (min-width: 1200px)',
+) !default;
+
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+// https://www.tam-tam.co.jp/tipsnote/html_css/post10708.html
+
+// .example {
+//   color: #F00;
+//   @include mq() {
+//     color: #00F;
+//   }
+//   @include mq(maxmd) {
+//     color: #0F0;
+//   }
+// }
+
+
+// =========================================
+// Transition manage
+// =========================================
+@mixin transition($local-speed: .15s) {
+  transition: $local-speed ease all;
+}
+// .example {
+//    @include transition;
+// }
+
+// =========================================
+// Button Shadow
+// =========================================
+
+@mixin hoverLighten($local-color) {
+  background-color: lighten($local-color, 4);
+}
+
+%local-hoverStyle {
+  transform: translate3d(1px, 1px, 0) perspective(0);
+  box-shadow: 3px 2px 0px 0 rgba(0,0,0,0.2);
+}
+
+@mixin buttonStyle-primary (
+  $local-bdc: $color-grayD,
+  $local-padding: 16px 10px,
+  $local-line-height: 1,
+  $local-pc-width: 500px,
+  $local-bgc: #FFF
+) {
+  text-align: center;
+  text-decoration: none;
+  line-height: $local-line-height;
+  padding: $local-padding;
+  margin-bottom: 40px;
+  border-radius: $primary-border-radius;
+  border: 1px solid $local-bdc;
+  box-shadow: 3px 3px 0px 0 rgba(0,0,0,0.2);
+  background-color: $local-bgc;
+  @include transition;
+  @include mq() {
+    letter-spacing: 1px;
+    font-size: fz(14);
+    font-weight: bold;
+    width: $local-pc-width;
+    margin: 0 auto 24px;
+    box-shadow: 5px 4px 0px 0 rgba(0,0,0,0.2);
+    // backface-visibility: hidden; IE11対策で消した
+    transform: translate3d(0, 0, 0) perspective(0);
+  }
+
+  &:hover {
+    will-change: transform, transition, box-shadow;
+    @extend %local-hoverStyle;
+  }
+}
+
+// ==========================================
+// z-index
+// =========================================
+$z-map: (
+  company-profile-header: true,
+  course-details-header: true,
+  parts-note-hole-white: true,
+  parts-fukidashi: true,
+  parts-magnet: true,
+  featurePic1: true,
+  featurePic2: true,
+  featurePic3: true,
+  top-post-item: true,
+  top-post-thumbnail: true,
+
+  parts-pen: true,
+  section-primary: true,
+
+  courseDetailsSchedule: true,
+  breadcrumbs: true,
+  top-mainvisual: true,
+  fixed:      true
+);
+
+
+// z-index
+@function z($name, $childname: 0) {
+  $getkey: map-get($z-map, $name);
+  @if $childname != 0 {
+    @return index($getkey, $childname);
+  }
+  @return inspect(index($z-map, ($name $getkey) ));
+}
+
+// .example {
+//   z-index: z(header);
+// }
+
+
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}
+
+
+// ===========================================
+// 黒板消し
+// ===========================================
+@mixin kokubankeshi(
+  $local-top: 16px,
+  $local-left: 3%
+) {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: $local-top;
+    left: $local-left;
+    display: block;
+    width: 95.5px;
+    height: 71.5px;
+    background: resolve("parts-blackboard-eraser.png") 0 0 no-repeat;
+    background-size: 95.5px 71.5px;
+
+    @include mq() {
+      width: 191px;
+      height: 143px;
+      background-size:
+        width("parts-blackboard-eraser.png")
+        height("parts-blackboard-eraser.png");
+    }
+  }
+}
+// ===========================================
+// 上履き
+// ===========================================
+@mixin uwabaki() {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 77px;
+    height: 40.5px;
+    background: resolve("parts-shoes.png") 0 0 no-repeat;
+    background-size: 77px 40.5px;
+
+    @include mq() {
+      width: 154px;
+      height: 81px;
+      background-size:
+        width("parts-shoes.png", 2)
+        height("parts-shoes.png", 2);
+    }
+  }
+}
+
+// 消し跡
+// =============================================
+@mixin erasure-mark() {
+    background-image:
+      resolve("parts-erasure-mark1.png"),
+      resolve("parts-erasure-mark2.png"),
+      resolve("parts-erasure-mark3.png");
+    background-repeat:
+      no-repeat,
+      no-repeat,
+      no-repeat;
+    background-size:
+      width("parts-erasure-mark1.png",2)
+      height("parts-erasure-mark1.png",2),
+
+      width("parts-erasure-mark2.png",1.5)
+      height("parts-erasure-mark2.png",1.5),
+
+      width("parts-erasure-mark3.png",1.5)
+      height("parts-erasure-mark3.png",1.5);
+
+    @include mq() {
+
+      background-size:
+      width("parts-erasure-mark1.png",1.3)
+      height("parts-erasure-mark1.png",2),
+
+      width("parts-erasure-mark2.png",1.1)
+      height("parts-erasure-mark2.png",1.1),
+
+      width("parts-erasure-mark3.png",1.5)
+      height("parts-erasure-mark3.png",1.5);
+    }
+}
+
+// 椅子の出力
+// ===========================================
+@mixin chair($local-num:1, $local-Shrink: null) {
+  content: "";
+  position: absolute;
+  display: block;
+
+  @if #{type-of($local-Shrink)} == "number" {
+    width: width("parts-chair#{$local-num}.png", $local-Shrink);
+  } @else {
+    width: width("parts-chair#{$local-num}.png");
+  }
+  @if #{type-of($local-Shrink)} == "number" {
+    height: height("parts-chair#{$local-num}.png", $local-Shrink);
+  } @else {
+    height: height("parts-chair#{$local-num}.png");
+  }
+
+  background: resolve("parts-chair#{$local-num}.png") 0 0 no-repeat;
+
+  @if #{type-of($local-Shrink)} == "number" {
+    background-size:
+      width("parts-chair#{$local-num}.png", $local-Shrink)
+      height("parts-chair#{$local-num}.png", $local-Shrink);
+  } @else {
+    background-size:
+      width("parts-chair#{$local-num}.png")
+      height("parts-chair#{$local-num}.png");
+  }
+}
+
+
+
+@mixin window {
+  position: relative;
+  text-decoration: underline;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    width: 10px;
+    height: 7px;
+    transform: translateY(-50%);
+    background-color: #CCC;
+    @include mq(maxmd) {
+      display: none;
+    }
+  }
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: calc(50% - 4px);
+    right: -25px;
+    width: 12px;
+    height: 9px;
+    transform: translateY(-50%);
+    border: 1px solid #FFFFFF;
+    background-color: $color-D;
+    @include transition();
+    @include mq(maxmd) {
+      display: none;
+    }
+  }
+  &:hover {
+    text-decoration: none;
+    &::after {
+      top: calc(50% - 7px);
+      right: -32px;
+      width: 17px;
+      height: 12px;
+      @include mq(maxmd) {
+        display: none;
+      }
+    }
+  }
+}
+
+// example =================================
+// &::after {
+//   @include chair(3, 2);
+//   top: 70px;
+//   right: 4%;
+//
+//   @include mq() {
+//     @include chair(3);
+//     top: 40px;
+//     right: -4%;
+//   }
+// }
+
+// =========================================
+// ページ内アンカーリンクでスクロールした位置と固定ヘッダー要素が被らないようにする
+// =========================================
+@mixin scrool-position {
+  &::before {
+    content: "";
+    display: block;
+    visibility: hidden;
+    margin-top: -120px;
+    height: 120px;
+  }
+}
