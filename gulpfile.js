@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 
-const autoprefixer = require('gulp-autoprefixer');
+// const autoprefixer = require('gulp-autoprefixer');
+const autoprefixer = require("autoprefixer");
 const babelify = require('babelify');
 const browser = require('browser-sync').create();
 const browserify = require('browserify');
@@ -19,45 +20,65 @@ const postcss = require('gulp-postcss');
 const assets = require('postcss-assets');
 // const normalize = require('postcss-normalize');
 const postcssGapProperties = require("postcss-gap-properties");
-var pug = require('gulp-pug');
+const pug = require('gulp-pug');
+
+
+
+const paths = {
+  'scss':  './src/stylesheets/',
+  'jssrc': './src/javascripts/',
+  'pug':   './src/pug/',
+  'html':  './dest/',
+  'css':   './dest/assets/css/',
+  'js':    './dest/assets/js/',
+  'image': 'assets/images/'
+}
 
 gulp.task('server', function () {
     browser.init({
         server: {
-            baseDir: './dist',
+            baseDir: paths.html,
             index: 'index.html'
         },
         port: 2000
     });
 });
-
-gulp.task('html', function () {
-  gulp.src('src/**/*.html')
+//setting : Pug Options
+const pugOptions = {
+  pretty: true
+}
+//Pug
+gulp.task('pug', function () {
+  return gulp.src([ paths.pug + '**/*.pug', '!' + paths.pug + '**/_*.pug'])
+    .pipe(plumber())
+    .pipe(pug(pugOptions))
+    .pipe(gulp.dest(paths.html))
     .pipe(browser.stream());
     browser.reload();
 });
 
+
 gulp.task('sass', function () {
-    gulp.src('src/stylesheets/**/*.scss')
+    gulp.src( paths.scss + '**/*.scss')
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(postcss([
-					postcssGapProperties(),
-					autoprefixer({
-						grid: true,
-            browsers: ['last 1 version'],
-            cascade: false
-        	}),
-          assets({
-						loadPaths: ['assets/images/'], // basePathから見た画像フォルダの位置
-						basePath: 'dist/', // プロジェクトで公開するパス
-						cachebuster: true
-					})
-				]))
-        .pipe(cleanCSS())
+            postcssGapProperties(),
+            autoprefixer({
+                grid: true,
+                browsers: ['last 1 version'],
+                cascade: false
+        	   }),
+            assets({
+                loadPaths: [ paths.image ], // basePathから見た画像フォルダの位置
+                basePath: paths.html, // プロジェクトで公開するパス
+                cachebuster: true
+            })
+        ]))
+        // .pipe(cleanCSS())
         .pipe(sourcemaps.write('../maps'))
-        .pipe(gulp.dest('./dist/assets/css'))
+        .pipe(gulp.dest( paths.css ))
         .pipe(browser.stream());
 });
 
@@ -77,28 +98,31 @@ gulp.task('es2015', function () {
             });
     });
 
-    gulp.src('src/javascripts/index.js')
+    gulp.src(paths.jssrc + 'index.js')
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(browserified)
         .pipe(buffer())
         .pipe(uglify())
         .pipe(sourcemaps.write('../maps'))
-        .pipe(gulp.dest('./dist/assets/js'))
+        .pipe(gulp.dest(paths.js))
         .pipe(browser.stream());
 });
 
+
 gulp.task('js.concat', function() {
-  return gulp.src('src/javascripts/vendor/*.js')
+  return gulp.src(paths.jssrc + 'vendor/*.js')
     .pipe(plumber())
     .pipe(concat('vendor.pack.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('./dist/assets/js'));
+    .pipe(gulp.dest(paths.js));
 });
+
 
 gulp.task('js', ['js.concat']);
 
-gulp.task('default', function() {
-    gulp.watch('src/stylesheets/**/*.scss',['sass']);
-    gulp.watch('src/javascripts/*.js', ['es2015']);
+gulp.task('default', ['server'], function() {
+    gulp.watch(paths.pug + '**/*.pug', ['pug']);
+    gulp.watch(paths.scss + '**/*.scss',['sass']);
+    gulp.watch([paths.jssrc + '**/*.js', '!' + paths.jssrc + 'vendor/*'], ['es2015']);
 });
