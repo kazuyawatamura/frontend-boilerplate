@@ -1,1 +1,33 @@
-@charset "UTF-8";
+// =========================================
+//Mediaquerys
+// =========================================
+$breakpoints: (
+  'maxmd': 'screen and (max-width: 767px)',
+  'sm': 'screen and (min-width: 400px)',
+  'md': 'screen and (min-width: 768px)',
+  'lg': 'screen and (min-width: 1080px)',
+  'xl': 'screen and (min-width: 1200px)',
+) !default;
+
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+// =========================================
+// z-index
+// =========================================
+$z-map: (
+  zzzzz: true
+);
+//z-index: z(zzzzz);
+
+// z-index
+@function z($name, $childname: 0) {
+  $getkey: map-get($z-map, $name);
+  @if $childname != 0 {
+    @return index($getkey, $childname);
+  }
+  @return inspect(index($z-map, ($name $getkey) ));
+}
