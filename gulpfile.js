@@ -4,7 +4,7 @@ var gulp =  require('gulp'),
             browser = require('browser-sync').create(),
             browserify = require('browserify'),
             buffer = require('vinyl-buffer'),
-            // cleanCSS = require('gulp-clean-css'),
+            cleanCSS = require('gulp-clean-css'),
             concat = require("gulp-concat"),
             plumber = require('gulp-plumber'),
             sass = require('gulp-sass'),
@@ -16,6 +16,7 @@ var gulp =  require('gulp'),
             // normalize = require('postcss-normalize'),
             postcssGapProperties = require("postcss-gap-properties"),
             pug = require('gulp-pug');
+            packageImporter = require('node-sass-package-importer');
 
 const paths = {
   'scss':  './src/stylesheets/',
@@ -47,7 +48,11 @@ gulp.task('sass', () => {
     return gulp.src( paths.scss + '**/*.scss')
         .pipe(plumber())
         .pipe(sourcemaps.init())
-        .pipe(sass())
+        .pipe(sass({
+            importer: packageImporter({
+                extensions: ['.scss', '.css']
+            })
+        }))
         .pipe(postcss([
             postcssGapProperties(),
             autoprefixer({
@@ -61,7 +66,7 @@ gulp.task('sass', () => {
                 cachebuster: true
             })
         ]))
-        // .pipe(cleanCSS())
+        .pipe(cleanCSS())
         .pipe(sourcemaps.write('../maps'))
         .pipe(gulp.dest( paths.css ))
         .pipe(browser.stream());

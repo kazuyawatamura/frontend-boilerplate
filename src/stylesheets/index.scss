@@ -1,27 +1,22 @@
-@charset "UTF-8";
-
-// ===========================
-// Config
-// ===========================
-@import "config/foundation/variables";
-@import "config/foundation/mixin";
-@import "config/foundation/base";
-
-// ===========================
-// Common , Parts
-// ===========================
-@import "config/object/common/common";
-// @import "config/object/common/header";
-// @import "config/object/common/footer";
 
 
-// ===========================
-// Page
-// ===========================
-@import "config/object/category/top";
+// ====================================
+// Base
+// ====================================
+@import "./base/ress";
+@import "./base/variable";
+@import "./base/font";
+@import "./base/mixin";
+@import "./base/function";
+@import "./base/base";
 
 
-// ===========================
-// IE hack
-// ===========================
-@import "config/foundation/iehack";
+
+// ====================================
+// Components
+// ====================================
+
+
+// ====================================
+// Pages
+// ====================================
