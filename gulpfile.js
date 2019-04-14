@@ -13,15 +13,13 @@ var gulp =  require('gulp'),
             uglify = require('gulp-uglify'),
             postcss = require('gulp-postcss'),
             assets = require('postcss-assets'),
-            // normalize = require('postcss-normalize'),
             postcssGapProperties = require("postcss-gap-properties"),
-            pug = require('gulp-pug');
-            packageImporter = require('node-sass-package-importer');
+            ejs = require('gulp-ejs');
 
 const paths = {
   'scss':  './src/stylesheets/',
   'jssrc': './src/javascripts/',
-  'pug':   './src/pug/',
+  'ejs':   './src/ejs/',
   'html':  './dest/',
   'css':   './dest/assets/css/',
   'js':    './dest/assets/js/',
@@ -29,18 +27,11 @@ const paths = {
   'image': '/dest/assets/images/'
 }
 
-//setting : Pug Options
-const pugOptions = {
-  pretty: true
-}
-//Pug
-gulp.task('pug', () => {
-    // browser.reload();
-  return gulp.src([ paths.pug + '**/*.pug', '!' + paths.pug + '**/_*.pug'])
-    .pipe(plumber())
-    .pipe(pug(pugOptions))
-    .pipe(gulp.dest(paths.html))
-    .pipe(browser.stream());
+// EJS
+gulp.task( "ejs", function () {
+    return gulp.src([ paths.ejs + '**/*.ejs', '!' + paths.ejs + '**/_*.ejs'])
+    .pipe(ejs({}, {}, { ext: '.html' }))
+    .pipe( gulp.dest(paths.html) );
 });
 
 // SCSS
@@ -111,7 +102,7 @@ gulp.task('js-concat', () => {
 
 // watch
 gulp.task('watches', () => {
-    gulp.watch(paths.pug + '**/*.pug', gulp.task('pug'));
+    gulp.watch(paths.ejs + '**/*.ejs', gulp.task('ejs'));
     gulp.watch(paths.scss + '**/*.scss', gulp.task('sass'));
     gulp.watch(paths.jssrc + 'vendor/*.js', gulp.task('js-concat'));
     gulp.watch([paths.jssrc + '**/*.js', '!' + paths.jssrc + 'vendor/*'], gulp.task('es2015'));

@@ -1,0 +1,23 @@
+<%
+  const localmeta = {
+    title: 'サイトタイトルです',
+    desc: 'ここでサイト説明文を記入します'
+  };
+  const headerContent = {
+    content: 'ここはテストヘッダーです'
+  };
+%>
+
+<!DOCTYPE html>
+<html lang="ja">
+<%- include('common/_head', {meta: localmeta}) %>
+<body>
+
+<%- include('common/_header', {header: headerContent}) %>
+
+<a href="./second/">第2階層へのリンク</a>
+
+<%- include('pages/_contents') %>
+
+</body>
+</html>

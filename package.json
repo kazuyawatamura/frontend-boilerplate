@@ -1,6 +1,6 @@
 {
   "name": "frontend-boilerplate",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "A boilerplate for frontend",
   "main": "index.js",
   "scripts": {
@@ -19,11 +19,11 @@
     "concat": "^1.0.3",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
+    "gulp-ejs": "^3.3.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^8.0.0",
-    "gulp-pug": "^4.0.1",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",

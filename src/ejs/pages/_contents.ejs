@@ -1,0 +1,30 @@
+<% const print = "出力します" %>
+<p class="print"><%= print %></p>
+
+<ul>
+  <% for (var i = 0; i < 5; i++) { %>
+  <li class="item<%= i+1 %>"><%= i+1 %>つ目の要素です</li>
+  <% } %>
+</ul>
+
+<ul>
+  <% var count = 1; %>
+  <% while (count <= 10) { %>
+    <li class="loop<%= count %>"><%= count %>回目の処理です。</li>
+    <% count++; %>
+  <% } %>
+</ul>
+
+<ul>
+  <% const array = ['ハンバーガー', 'カレー', 'パスタ', 'ラーメン', 'チャーハン']; %>
+  <% array.forEach(function (value) { %>
+  <li><%= value %></li>
+  <% }); %>
+</ul>
+
+<%
+  var page_id = {
+    id: '02'
+  }
+%>
+<%- include('../parts/_banner', {page: page_id}) %>
