@@ -27,7 +27,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "postcss": "^7.0.14",
+    "postcss": "^7.0.36",
     "postcss-assets": "^5.0.0",
     "postcss-gap-properties": "^2.0.0",
     "postcss-normalize": "^7.0.1",
